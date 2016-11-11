@@ -1,6 +1,6 @@
 {
   "name": "blockonomics",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "nodejs API for blockonomics",
   "scripts": {
     "test": "node app.js",

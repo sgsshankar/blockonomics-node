@@ -28,7 +28,10 @@ getBalance(address)
 getHistory(address)
 getTransactionDetail(txid)
 getTransactionReceipt(txid, address)
-
+getBalance(APIKEY)
+insertAddress(APIKEY, addr, tag)
+deleteAddress(APIKEY, addr)
+getNewAddress(APIKEY, reset, match_account)
 ```
 
 ### Development

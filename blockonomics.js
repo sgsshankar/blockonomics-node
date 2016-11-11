@@ -31,10 +31,43 @@ module.exports = {
 		var url = config.config.transactionReceipt + "?txid=" + txId + "&addr=" + addr;
 		var result = sendRequest(url, "GET", {});
 		return result;
+	},
+
+	getBalance: function(APIKEY) {
+		var url = config.config.address;
+		var result = sendRequest(url, "GET", {}, APIKEY);
+		return result;
+	},
+
+	insertAddress: function(APIKEY, addr, tag) {
+		var url = config.config.address;
+		var result = sendRequest(url, "POST", {
+			"addr": addr,
+			"tag": tag
+		}, APIKEY);
+		return result;
+	},
+
+	deleteAddress: function(APIKEY, addr) {
+		var url = config.config.address;
+		var result = sendRequest(url, "DELETE", {
+			"addr": addr
+		}, APIKEY);
+		return result;
+	},
+
+	getNewAddress: function(APIKEY, reset, match_account) {
+		var url = config.config.newAddress;
+		if (reset == 1)
+			url = url + "reset=1";
+		if (!match_account)
+			url = url + "match_account=" + match_account;
+		var result = sendRequest(url, "POST", {}, APIKEY);
+		return result;
 	}
 };
 
-function sendRequest(fullpath, method, querystring) {
+function sendRequest(fullpath, method, querystring, APIKEY) {
 
 	var options = {
 		url: config.config.hostUrl + fullpath,
@@ -43,7 +76,8 @@ function sendRequest(fullpath, method, querystring) {
 		headers: {
 			'Content-Type': 'application/json',
 			'User-Agent': 'blockonomics',
-			'Accept': 'application/json'
+			'Accept': 'application/json',
+			'Authorization': 'Bearer ' + APIKEY
 		}
 	};
 
@@ -62,7 +96,13 @@ function sendRequest(fullpath, method, querystring) {
 				.end(function(response) {
 					resolve(response.body);
 				});
-
+		} else if (method == "DELETE") {
+			unirest.delete(options.url)
+				.headers(options.headers)
+				.send(options.qs)
+				.end(function(response) {
+					resolve(response.body);
+				});
 		}
 	});
 

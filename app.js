@@ -32,6 +32,21 @@ app.get('/api/tx', function(req, res) {
 	});
 });
 
+app.get('/api/address/:apikey', function(req, res) {
+	var response = blockonomics.getBalance(req.params.apikey).then(function(response) {
+		res.send(response);
+	});
+
+});
+
+app.get('/api/new_address/:apikey', function(req, res) {
+	var response = blockonomics.getNewAddress(req.params.apikey, req.query.reset, req.query.match_account).then(function(response) {
+		res.send(response);
+		console.log(response)
+	});
+
+});
+
 var server = app.listen(port, function() {
 	console.log("open browser to http://localhost:3000/");
 });
