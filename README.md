@@ -4,7 +4,7 @@ Nodejs Library for blockonomics
 ### Installation
 
 ```
-npm install blocknomics
+npm install blockonomics
 
 ```
 
